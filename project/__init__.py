@@ -14,7 +14,19 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or "it's a secret"
-app.config['SQLALCHEMY_ECHO'] = True
+# app.config['SQLALCHEMY_ECHO'] = True
+
+
+# If we are in production, make sure we DO NOT use the debug mode
+if os.environ.get('ENV') == 'production':
+    debug = False
+    # Heroku gives us an environment variable called DATABASE_URL when we add a postgres database
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+else:
+    debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/wbnb'
+    app.config['SQLALCHEMY_ECHO'] = True
+
 
 modus = Modus(app)
 bcrypt = Bcrypt(app)
