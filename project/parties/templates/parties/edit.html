@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block title%}
+Edit Party
+{% endblock %}
+
+{% block content %}
+<h2>Edit Party</h2>
+<form class="form-horizontal" action="{{url_for('parties.show',party_id=party_id)}}?_method=PATCH" method="POST">
+  {{ form.csrf_token }}
+
+  {% for field in form %}
+  {% if field.name not in ['csrf_token','host_id']%}
+    
+  <div class="form-group">
+    {{ field.label(class_="col-sm-2 control-label") }}
+    <div class="col-sm-3">
+      {{ field(class_="form-control") }}
+      <span>
+        {% if field.errors %}
+          {% for error in field.errors %}
+          {{ error }}
+          {% endfor %}
+        {% endif %}
+        </span>
+    </div>
+  </div>
+  {% endif %}
+    
+  {% endfor %}
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-2">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+
+</form>
+{% endblock %}

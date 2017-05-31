@@ -44,6 +44,7 @@ class User(db.Model, UserMixin):
   latitude = db.Column(db.Text)
   longitude = db.Column(db.Text)
   parties = db.relationship('Party', backref='host',foreign_keys="Party.host_id", lazy='dynamic')
+  attends = db.relationship('Party', backref='attendee',foreign_keys="Party.attendee_id", lazy='dynamic')
   # followers = db.relationship("User",
   #                             secondary=FollowersFollowee,
   #                             primaryjoin=(FollowersFollowee.c.follower_id == id),

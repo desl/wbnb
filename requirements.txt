@@ -18,6 +18,8 @@ Flask-WTF==0.14.2
 geocoder==1.22.6
 gunicorn==19.7.1
 idna==2.5
+infinity==1.4
+intervals==0.8.0
 ipython==5.2.2
 ipython-genutils==0.1.0
 itsdangerous==0.24
@@ -41,6 +43,8 @@ six==1.10.0
 SQLAlchemy==1.1.5
 traitlets==4.3.1
 urllib3==1.21.1
+validators==0.11.3
 wcwidth==0.1.7
 Werkzeug==0.11.15
 WTForms==2.1
+WTForms-Components==0.10.3

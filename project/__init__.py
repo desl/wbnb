@@ -6,6 +6,7 @@ from flask_login import LoginManager, current_user
 import os
 from IPython import embed
 from sqlalchemy import desc
+from project.parties.forms import JoinForm
 
 app = Flask(__name__)
 
@@ -39,7 +40,7 @@ from project.users.models import User
 from project.parties.models import Party
 
 app.register_blueprint(users_blueprint, url_prefix='/users')
-app.register_blueprint(parties_blueprint, url_prefix='/parties/<int:id>')
+app.register_blueprint(parties_blueprint, url_prefix='/parties')
 
 @login_manager.user_loader
 def load_user(id):
@@ -47,12 +48,14 @@ def load_user(id):
 
 @app.route('/')
 def root():
-  # if current_user.is_anonymous:
-  #   pass
-  #   return render_template('home.html')
-  # else:
-  #   u = User.query.get(current_user.id)
-  return render_template('home.html')
+  if current_user.is_anonymous:
+    pass
+    return render_template('home.html')
+  else:
+    u = User.query.get(current_user.id)
+    parties = Party.query.all()
+    joinform = JoinForm()
+  return render_template('home.html',user=u, parties=parties, joinform=joinform)
 
 @app.after_request
 def add_header(r):

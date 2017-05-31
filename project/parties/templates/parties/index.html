@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if parties|length == 0  %}
+<h3>Sorry, no parties found</h3>
+{% else %}
+<ul>
+{% for party in parties%}
+  <li>
+    <a href="{{url_for('parties.show', party_id=party.id)}}">
+      {{party.host_id}} - {{party.description}}
+    </a>
+  </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

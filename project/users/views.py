@@ -148,6 +148,7 @@ def edit(id):
 def show(id):
   found_user = User.query.get(id)
   if request.method == 'GET' or current_user.is_anonymous or current_user.get_id() != str(id):
+    embed()
     return render_template('users/show.html', user=found_user)
   if request.method == b"PATCH":
     form = UserForm(request.form)

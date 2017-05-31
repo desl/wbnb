@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+Show Party
+{% endblock %}
+{% block content %}
+	<h2>Party Summary</h2>
+	<p>Host: {{party.host_id}} - {{party.host.username}}/{{party.host.name}}</p>
+	<p>Description: {{party.description}}</p>
+	<p>Instructions: {{party.instructions}}</p>
+	<p>Attendee: {{party.attendee_id}}</p>
+	<p>Cost: ${{party.cost}}</p>
+	<p>Date: {{party.date}}</p>
+	<p>Start Time: {{party.time}}</p>
+	<hr>
+	<a class="btn btn-default" href="{{ url_for('parties.edit', party_id=party.id) }}">Edit Party</a>
+{% endblock %}
