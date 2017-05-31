@@ -25,8 +25,8 @@
         <a href="{{ url_for('root') }}" class="navbar-brand">
           <!--img src="{{ current_user.header_image_url }}" alt="">
           <img src="{{ url_for('static', filename='images/warbler-logo.png') }}" alt=""-->
-          <img src="http://lorempixel.com/20/20/" alt="">
-          <img src="http://lorempixel.com/20/20/" alt="">
+          <img src="https://lorempixel.com/20/20/" alt="">
+          <img src="https://lorempixel.com/20/20/" alt="">
           <span>wearbnb</span>
         </a>
       </div>
@@ -47,6 +47,7 @@
           <li><a href="{{ url_for('users.signup') }}">Sign up</a></li>
           <li><a href="{{ url_for('users.login') }}">Log in</a></li>
         {% else %}
+          <li><a href="{{ url_for('parties.new')}}">Host a wearbnb</a></li>
           <li><a href="{{ url_for('users.show', id=current_user.id) }}">
             <img src="{{ current_user.image_url }}" alt="{{ current_user.username }}">
           </a></li>
