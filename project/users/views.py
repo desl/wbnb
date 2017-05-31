@@ -155,6 +155,11 @@ def show(id):
       if bcrypt.check_password_hash(found_user.password, form.password.data):
         found_user.username = form.username.data
         found_user.email = form.email.data
+        found_user.name = form.name.data
+        found_user.address = form.address.data
+        found_user.city = form.city.data
+        found_user.state = form.state.data
+        found_user.zipcode = form.zipcode.data
         found_user.image_url = form.image_url.data or None
         db.session.add(found_user)
         db.session.commit()
