@@ -1,5 +1,6 @@
 from project import db, bcrypt
 from flask_login import UserMixin
+import geocoder
 
 
 FollowersFollowee = db.Table('follows',
@@ -60,6 +61,8 @@ class User(db.Model, UserMixin):
     self.zipcode = zipcode
     self.password = bcrypt.generate_password_hash(password).decode('UTF-8')
     self.image_url = image_url
+    g = geocoder.google("{},{},{},{}".format(address, city, state, zipcode))
+    [self.latitude, self.longitude] = g.latlng
 
   def __repr__(self):
     return "#{}: email: {} - username: {}".format(self.id, self.email, self.username)
