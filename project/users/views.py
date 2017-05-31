@@ -40,7 +40,6 @@ def signup():
   if request.method == "POST":
     if form.validate():
       try:
-        embed()
         new_user = User(
           email=form.email.data,
           username=form.username.data,
@@ -66,7 +65,6 @@ def signup():
 def login():
   form = LoginForm()
   if request.method == "POST":
-    embed();
     if form.validate():
       found_user = User.query.filter_by(username = form.username.data).first()
       if found_user:
