@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Home!
 
-Home may be where the heart is, but home isn't where you have access to a washer and dryer.
+<h2>Find a wearbnb near you! <small>Do your laundry with someone else at their house.</small></h2>
+<img src="http://i.huffpost.com/gen/1777054/images/o-LAUNDRY-facebook.jpg" alt="" class="img-responsive">
+Home may be where the heart is, but isn't where you have a washer and dryer.
 
-<h2>Find a wearbnb near you!</h2>
-<h6>Do your laundry at someone else's house!</h6>
-<h6>Hang out with them. They're really cool!</h6>
+<!--0h6>Hang out with them. They're really cool!</h6-->
+
 <table class="table">
 <thead>
 <tr>
 	<th></th>
 	<th>Host</th>
+	{% if parties[0].distance != None %}
+	<th>Distance</th>
+	{% endif %}
 	<th>Description</th>
 	<th>Cost</th>
 	<th>Location</th>
@@ -39,7 +42,13 @@ Home may be where the heart is, but home isn't where you have access to a washer
 				</form>
 				{% endif %}
 		</td>
-		<td>{{ party.host.name }}</td>
+		<td>{{ party.host.name }} {% if party.host.image_url %}
+																	<img class="list-image" src="{{party.host.image_url}}" alt="party host">
+																	{% endif %}
+		</td>
+		{% if party.distance != None %}
+		<td>{{party.distance}} km
+		{% endif %}
 		<td>{{ party.description}}</td>
 		<td>${{ party.cost}}</td>
 		<td>{{ party.host.address}} {{ party.host.city}}, {{ party.host.state }}</td>

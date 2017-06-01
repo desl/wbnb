@@ -56,6 +56,7 @@ def root():
   else:
     u = User.query.get(current_user.id)
     parties = Party.query.filter(Party.date >= d).order_by(Party.date)
+    parties = Party.distance(u.latitude, u.longitude)
     # parties = Party.query.all()
     joinform = JoinForm()
   return render_template('home.html',user=u, parties=parties, joinform=joinform)

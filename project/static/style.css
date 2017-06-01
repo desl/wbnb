@@ -4,3 +4,30 @@
   width: 20px;
   border-radius: 2px;
 }
+
+/*.navbar-header{
+	background-color: #FF595C;
+}*/
+
+#nav-bg{
+	background-color: #FF595C;
+	color: white;
+}
+#nav-bg, #wbnb-logo, #nav-bg ul> li > a , .wbnb-script{
+	color: white;
+}
+
+.list-image{
+	width: 30px;
+	height: 30px;
+}
+
+.navbar-image{
+	width: 25px;
+	height: 25px;
+}
+
+.wbnb-script{
+	font-family: Lemon;
+	font-size: 1.5em;
+}

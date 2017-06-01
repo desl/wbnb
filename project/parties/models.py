@@ -1,5 +1,6 @@
 from project import db 
-from datetime import datetime
+import datetime
+from math import sin, cos, sqrt, atan2, radians
 
 class Party(db.Model):
   
@@ -13,6 +14,10 @@ class Party(db.Model):
   cost = db.Column(db.Numeric)
   host_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
   attendee_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  distance = None
+  # distance is used by the distance method to transport data
+  #### it is never meant to be commited to the database as it
+  #### is relative the the lat/lng submitted to the method.
   # host_rating = db.Column(db.Integer)
   # attendee_rating = db.Column(db.Integer)
 
@@ -24,5 +29,40 @@ class Party(db.Model):
     self.time = time
     self.instructions = instructions
 
+  def distance(lat,lng,within = 100, qty=10):
+    d = datetime.date.isoformat(datetime.date.today())
+    parties = Party.query.filter(Party.date >= d)
+
+    my_list = []
+    for party in parties:
+      # approximate radius of earth in km
+      R = 6373.0
+
+      lat1 = radians(float(lat))
+      lon1 = radians(float(lng))
+      lat2 = radians(float(party.host.latitude))
+      lon2 = radians(float(party.host.longitude))
+
+      dlon = lon2 - lon1
+      dlat = lat2 - lat1
+
+      a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+      c = 2 * atan2(sqrt(a), sqrt(1 - a))
+      distance = R * c
+      party.distance = format(distance, '.2f')
+      my_list.append(party)
+
+    # users.sort(key=lambda user: user.steamID)
+    my_list.sort(key=lambda x: x.distance )
+    return my_list[:qty:]
+
+
   def __repr__(self):
     return "{} -{}".format(self.description, self.host_id)
+
+
+
+
+
+
+
