@@ -49,7 +49,12 @@
         {% else %}
           <li><a href="{{ url_for('parties.new')}}">Host a wearbnb</a></li>
           <li><a href="{{ url_for('users.show', id=current_user.id) }}">
+            {% if current_user.image_url %}
+            {{ current_user.username }}
             <img src="{{ current_user.image_url }}" alt="{{ current_user.username }}">
+            {% else %}
+            {{ current_user.username }}
+            {% endif %}
           </a></li>
           <li><a href="{{ url_for('users.logout') }}">Log out</a></li>
         {% endif %}

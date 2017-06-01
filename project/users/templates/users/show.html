@@ -4,15 +4,17 @@ Show User
 {% endblock %}
 {% block content %}
 	<h2>User Summary</h2>
-	<p>username: {{user.username}}</p>
-	<p>email: {{user.email}}</p>
-	<p>name: {{user.name}}</p>
-	<p>address: {{user.address}}</p>
-	<p>city: {{user.city}}</p>
-	<p>state: {{user.state}}</p>
-	<p>zipcode: {{user.zipcode}}</p>
-	<p>latitude: {{user.latitude}}</p>
-	<p>longitude: {{user.longitude}}</p>
+	<p>Username: {{user.username}}</p>
+	<p>Email: {{user.email}}</p>
+	<p>Name: {{user.name}}</p>
+	<p>Address: {{user.address}}</p>
+	<p>City: {{user.city}}</p>
+	<p>State: {{user.state}}</p>
+	<p>Zipcode: {{user.zipcode}}</p>
+	<p>Latitude: {{user.latitude}}</p>
+	<p>Longitude: {{user.longitude}}</p>
 	<hr>
+	{% if current_user.id == user.id %}
 	<a class="btn btn-default" href="{{ url_for('users.edit', id=user.id) }}">Edit User</a>
+	{% endif %}
 {% endblock %}

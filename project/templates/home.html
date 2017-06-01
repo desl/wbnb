@@ -6,7 +6,8 @@ Home!
 Home may be where the heart is, but home isn't where you have access to a washer and dryer.
 
 <h2>Find a wearbnb near you!</h2>
-
+<h6>Do your laundry at someone else's house!</h6>
+<h6>Hang out with them. They're really cool!</h6>
 <table class="table">
 <thead>
 <tr>
@@ -41,7 +42,7 @@ Home may be where the heart is, but home isn't where you have access to a washer
 		<td>{{ party.host.name }}</td>
 		<td>{{ party.description}}</td>
 		<td>${{ party.cost}}</td>
-		<td>{{ party.host.address}}</td>
+		<td>{{ party.host.address}} {{ party.host.city}}, {{ party.host.state }}</td>
 		<td>{{ party.date }}</td>
 		<td>{{ party.time }}</td>
 	</tr>

@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, current_user, login_required
 from functools import wraps
 from IPython import embed
+import datetime
 import json
 
 users_blueprint = Blueprint(
@@ -164,7 +165,8 @@ def show(id):
         db.session.add(found_user)
         db.session.commit()
         return redirect(url_for('users.show', id=id))
-      flash({ 'text': "Wrong password, please try again.", 'status': 'danger'})
+      else:
+        flash({ 'text': "Wrong password, please try again.", 'status': 'danger'})
     return render_template('users/edit.html', form=form, user=found_user)
   if request.method == b"DELETE":
     db.session.delete(found_user)

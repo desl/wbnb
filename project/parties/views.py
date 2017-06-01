@@ -19,7 +19,6 @@ parties_blueprint = Blueprint(
 def index():
     if request.method in ['POST',b'POST']:
         form = PartyForm()
-        # embed()
         if form.validate():
             party = Party(
                     form.description.data,
@@ -63,16 +62,22 @@ def show(party_id):
             db.session.commit()
             return redirect(url_for('parties.show',party_id=party_id))
     if request.method in ['DELETE',b'DELETE']:
-        db.session.delete(party)
-        db.session.commit()
-        return redirect(url_for('parties.index'))
+        form = JoinForm(request.form)
+        if form.validate():
+            db.session.delete(party)
+            db.session.commit()
+            return redirect(url_for('root'))
     return render_template('parties/show.html',party=party,party_id=party_id)
 
 @parties_blueprint.route('/<int:party_id>/edit', methods=['GET'])
 @login_required
 def edit(party_id):
     party = Party.query.get(party_id)
-    return render_template('parties/edit.html', form=PartyForm(obj=party), party_id=party_id)
+    if party.host_id == current_user.id:
+        return render_template('parties/edit.html', form=PartyForm(obj=party), party_id=party_id)
+    else:
+        flash({ 'text': "Permission denied!", 'status': 'danger'})
+        return redirect(url_for('root'))
 
 @parties_blueprint.route('/join/<int:party_id>', methods=['POST'])
 @login_required
