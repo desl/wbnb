@@ -1,10 +1,12 @@
 # wearbnb
-###### do your laundry at someone else's house
-###### host someone for laundry and get paid
+[https://wbnb.herokuapp.com/](https://wbnb.herokuapp.com/)
+
+* do your laundry at someone else's house
+* host someone for laundry and get paid
 
 ## So what does it do?
 
-You've got laundry to do, but the laundromat is such a drag.
+You've got laundry to do, but the laundromat is a drag.
 Take a look at people near you who for a few bucks will open up their laundry rooms for you to visit.
 
 Or maybe you're going to watch the game anyway. Why not make a few bucks while entertaining a fellow sportsfan while they wash and fold.
@@ -26,7 +28,16 @@ Here's what I'd do if I had more time.
 
 ## Technologies Used
 
-Uses the following technologies
+#### Languages
+
+* Javascript
+* Python
+* Jquery
+* AJAX
+* SQL
+* Postgress
+
+#### With the following libraries
 
 * Flask
 	* flask-login
@@ -35,18 +46,20 @@ Uses the following technologies
 	* flask-blueprints
 	* flask-sqlalchemy
 	* flask-migrate
-* Postgres
-* jquery
-* ajax
+* Geocoder
 * Twitter Bootstrap
-* geocoder python library
+* bcrypt
 
 ## Deployment
-###### App is deployed to heroku
 
-1. get yourself a heroku account.
-	* set up the app with a postrgres database.
-2. clone the repo
-3. Create a heroku remote
-3. push it to heroku: git push heroku master
-4. *do the database upgrade* python manage.py db upgrade
+#### Get it up and running locally
+###### Assumes a unix-like or mac environment
+
+1. Clone the repo: ```git clone https://github.com/desl/wbnb```
+2. ```cd wbnb```
+3. Highly recommend: ```mkvirtualenv wbnb```
+4. ```pip install -r requirements.txt```
+3. Assuming postgres is already installed ```createdb wbnb```
+4. Do the database migration/upgrade: ```python manage.py db upgrade```
+5. Start the server: ```python app.py```
+6. Runs on port 3000. [http://localhost:3000/](http://localhost:3000/)

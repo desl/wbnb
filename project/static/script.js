@@ -39,6 +39,7 @@ $(document).ready(function(){
 		url = `/parties/json`;
 		verb = $(e.target).data("verb");
 
+		if (verb === 'today') return;
 		// "X-CSRFToken" =  is what would go in the header.
 		$.post(url, {
 					verb: verb,
@@ -108,6 +109,34 @@ $(document).ready(function(){
 			}
 			
 		});
+	});
+	
+	var todayToggle;
+
+	var $btnToday = $('#btn-today');
+	$btnToday.on('click',function(e){
+		// get all the table rows
+
+		let $tRows = $('tbody>tr');
+
+		if (todayToggle === 'hide' || todayToggle === undefined){
+			todayToggle = 'show';
+			let todayStr = new Date().toISOString().slice(0,10)
+			for (let i=0; i < $tRows.length; i++){
+				if ($tRows.eq(i).children().eq(6).text() !== todayStr){
+					$tRows.eq(i).hide();
+				}
+			}
+			$btnToday.text('Any Day');
+			return;
+		}
+
+		if (todayToggle === 'show'){
+			todayToggle = 'hide';
+			$tRows.show();
+			$btnToday.text('Today');
+		}
+
 	});
 
 	// Now that our even listeners are established, make something happen:

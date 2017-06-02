@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for, Blueprint, flash
 from project.users.models import User
 from project.users.forms import UserForm, UserEditForm, LoginForm
 from project.parties.models import Party
+from project.parties.forms import JoinForm
 from project import db, bcrypt
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, current_user, login_required
@@ -149,7 +150,9 @@ def edit(id):
 def show(id):
   found_user = User.query.get(id)
   if request.method == 'GET' or current_user.is_anonymous or current_user.get_id() != str(id):
-    return render_template('users/show.html', user=found_user)
+    h_parties = found_user.parties.all();
+    a_parties = found_user.attends.all();
+    return render_template('users/show.html', user=found_user, h_parties=h_parties,a_parties=a_parties, joinform=JoinForm())
   if request.method == b"PATCH":
     form = UserForm(request.form)
     if form.validate():

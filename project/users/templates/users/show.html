@@ -17,4 +17,106 @@ Show User
 	{% if current_user.id == user.id %}
 	<a class="btn btn-default" href="{{ url_for('users.edit', id=user.id) }}">Edit User</a>
 	{% endif %}
+
+	{% if h_parties %}
+		<h3>wearbnb hosting</h3>
+		<table class="table">
+			<thead>
+			<tr>
+				<th></th>
+				<th>Host</th>
+				<!--th>Distance</th-->
+				<th>Description</th>
+				<th>Cost</th>
+				<th>Location</th>
+				<th>Date</th>
+				<th>Time</th>
+			</tr>
+			</thead>
+			<tbody>
+				{% for party in h_parties %}
+					<tr>
+						<td>{% if party.host_id == user.id %}
+								<a href="{{url_for('parties.edit',party_id=party.id)}}" class="btn btn-primary">Edit</a>
+								{% elif not party.attendee_id %}
+								<form action="{{url_for('parties.join',party_id=party.id)}}" method="POST">
+									{{ joinform.csrf_token }}
+									<input type="hidden" name="verb" value="join">
+									<input type="submit" value="Join" class="btn btn-success">
+								</form>
+								{% elif party.attendee_id == user.id %}
+								<form action="{{url_for('parties.join',party_id=party.id)}}" method="POST">
+									{{ joinform.csrf_token }}
+									<input type="hidden" name="verb" value="leave">
+									<input type="submit" value="Leave" class="btn btn-danger">
+								</form>
+								{% endif %}
+						</td>
+						<td> {% if party.host.image_url %}
+																					<img class="list-image" src="{{party.host.image_url}}" alt="party host">
+																					{% endif %}
+																					{{ party.host.name }}
+						</td>
+						<!--td>{{party.distance}} km </td-->
+						<td>{{ party.description}}</td>
+						<td>${{ party.cost}}</td>
+						<td>{{ party.host.address}} {{ party.host.city}}, {{ party.host.state }}</td>
+						<td>{{ party.date }}</td>
+						<td>{{ party.time }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+
+	{% if a_parties %}
+		<h3>wearbnb attending</h3>
+		<table class="table">
+			<thead>
+			<tr>
+				<th></th>
+				<th>Host</th>
+				<!--th>Distance</th-->
+				<th>Description</th>
+				<th>Cost</th>
+				<th>Location</th>
+				<th>Date</th>
+				<th>Time</th>
+			</tr>
+			</thead>
+			<tbody>
+				{% for party in a_parties %}
+					<tr>
+						<td>{% if party.host_id == user.id %}
+								<a href="{{url_for('parties.edit',party_id=party.id)}}" class="btn btn-primary">Edit</a>
+								{% elif not party.attendee_id %}
+								<form action="{{url_for('parties.join',party_id=party.id)}}" method="POST">
+									{{ joinform.csrf_token }}
+									<input type="hidden" name="verb" value="join">
+									<input type="submit" value="Join" class="btn btn-success">
+								</form>
+								{% elif party.attendee_id == user.id %}
+								<form action="{{url_for('parties.join',party_id=party.id)}}" method="POST">
+									{{ joinform.csrf_token }}
+									<input type="hidden" name="verb" value="leave">
+									<input type="submit" value="Leave" class="btn btn-danger">
+								</form>
+								{% endif %}
+						</td>
+						<td> {% if party.host.image_url %}
+																					<img class="list-image" src="{{party.host.image_url}}" alt="party host">
+																					{% endif %}
+																					{{ party.host.name }}
+						</td>
+						<!--td>{{party.distance}} km </td-->
+						<td>{{ party.description}}</td>
+						<td>${{ party.cost}}</td>
+						<td>{{ party.host.address}} {{ party.host.city}}, {{ party.host.state }}</td>
+						<td>{{ party.date }}</td>
+						<td>{{ party.time }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
 {% endblock %}

@@ -18,7 +18,7 @@ class Party(db.Model):
   # distance is used by the distance method to transport data
   #### it is never meant to be commited to the database as it
   #### is relative the the lat/lng submitted to the method.
-  
+
   # host_rating = db.Column(db.Integer)
   # attendee_rating = db.Column(db.Integer)
 
@@ -77,7 +77,7 @@ def json_friendly(alist):
       "lat": party.host.latitude,
       "lng": party.host.longitude,
       "attendee_id": party.attendee_id,
-      "date": party.date,
+      "date": party.date.strftime("%Y-%m-%d"),
       "time": str(party.time),
       "distance": party.distance_to,
       "image": party.host.image_url
