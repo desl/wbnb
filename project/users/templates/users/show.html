@@ -25,6 +25,7 @@ Show User
 			<tr>
 				<th></th>
 				<th>Host</th>
+				<th>Attendee</th>
 				<!--th>Distance</th-->
 				<th>Description</th>
 				<th>Cost</th>
@@ -58,6 +59,14 @@ Show User
 																					{{ party.host.name }}
 						</td>
 						<!--td>{{party.distance}} km </td-->
+						<td>
+								{% if current_user.id == party.host_id %}
+										{% if party.attendee.image_url %}
+												<img class="list-image" src="{{party.attendee.image_url}}" alt="party attendee">
+										{% endif %}													
+										{{ party.attendee.name }}
+								{% endif %}
+						</td>
 						<td>{{ party.description}}</td>
 						<td>${{ party.cost}}</td>
 						<td>{{ party.host.address}} {{ party.host.city}}, {{ party.host.state }}</td>
@@ -69,7 +78,7 @@ Show User
 		</table>
 	{% endif %}
 
-	{% if a_parties %}
+	{% if a_parties and user.id == current_user.id %}
 		<h3>wearbnb attending</h3>
 		<table class="table">
 			<thead>
