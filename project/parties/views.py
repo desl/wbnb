@@ -138,13 +138,16 @@ def json():
         if joinform.verb.data == 'anywhere':
             parties = json_friendly(Party.query.all())
         if joinform.verb.data == 'nearby':
-            parties = json_friendly(Party.distance(joinform.lat.data, joinform.lng.data))
+            # should make sure user is signed in
+            if (current_user.is_anonymous):
+                return "login_required"
+            parties = json_friendly(Party.distance(current_user.latitude, current_user.longitude))
         if joinform.verb.data == 'walking':
-            parties = json_friendly(Party.distance(joinform.lat.data, joinform.lng.data,within=1))
-        # embed()
-        # parties = Party.distance_clean("39.9126212", "-122.2864609")
-        # gork = {"foo": "bar"}
-        # embed()
+            if (current_user.is_anonymous):
+                return "login_required"
+            # should make sure user is signed in.
+            parties = json_friendly(Party.distance(current_user.latitude, current_user.longitude,within=1))
+
         return jsonify(results=parties)
 
 

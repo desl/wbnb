@@ -43,10 +43,14 @@ $(document).ready(function(){
 		// "X-CSRFToken" =  is what would go in the header.
 		$.post(url, {
 					verb: verb,
-					csrf_token: csrf,
-					lat: "37.9126212",
-					lng: "-122.2864609"
+					csrf_token: csrf
+					// lat: "37.9126212",
+					// lng: "-122.2864609"
 				}).then(function(response){
+			
+			if (response === "login_required"){
+				window.location.replace("/users/login")
+			}
 			$tbody = $('tbody');
 			$tbody.empty();
 
@@ -60,10 +64,16 @@ $(document).ready(function(){
 				let $tdButton = $('<td>')
 
 				if (!plist[i].attendee_id && parseInt(plist[i].host_id) != parseInt(userId)){
-					let $button = $('<button>').text('Join').addClass('btn').addClass('btn-success');
-					$button.attr("data-mid", plist[i].id)
-					$button.attr("data-verb", "join")
-					$tdButton.append($button);
+					if (userId === "0"){
+						let $aLogin = $('<a>').text('Join').addClass('btn').addClass('btn-success');
+						$aLogin.attr('href',"/users/login");
+						$tdButton.append($aLogin)
+					} else {	
+						let $button = $('<button>').text('Join').addClass('btn').addClass('btn-success');
+						$button.attr("data-mid", plist[i].id)
+						$button.attr("data-verb", "join")
+						$tdButton.append($button);
+					}
 				}
 
 				if ( parseInt(plist[i].attendee_id) === parseInt(userId)){
