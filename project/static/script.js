@@ -14,6 +14,7 @@ $(document).ready(function(){
 	});
 
 
+	// Join/Edit/Leave buttons within the table
 	tButtons.on('click','button',function(e){
 		csrf = $('#token').data("csrf"); // CSRF Token
 		verb = $(e.target).data("verb");
@@ -34,6 +35,7 @@ $(document).ready(function(){
 		});
 	});
 
+	// Control buttons betweent the image and the table
 	buttonList.on('click','button',function(e){
 		csrf = $('#token').data("csrf"); // CSRF Token
 		url = `/parties/json`;
@@ -41,6 +43,7 @@ $(document).ready(function(){
 
 		if (verb === 'today') return;
 		// "X-CSRFToken" =  is what would go in the header.
+
 		$.post(url, {
 					verb: verb,
 					csrf_token: csrf
@@ -53,6 +56,9 @@ $(document).ready(function(){
 			}
 			$tbody = $('tbody');
 			$tbody.empty();
+
+			$btnToday.text('Today');
+			todayToggle = 'hide';
 
 			let plist = response.results; // Party List
 
