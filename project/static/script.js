@@ -11,7 +11,6 @@ $(document).ready(function(){
 					csrf_token: csrf,
 		}).then(function(response){
 			userId = response;
-			console.log("userId",userId);
 	});
 
 
@@ -20,16 +19,13 @@ $(document).ready(function(){
 		verb = $(e.target).data("verb");
 		mid = $(e.target).data("mid");
 		url = `/parties/${mid}/ajoin`;
-		// debugger;
 
 		$.post(url, {
 					verb: verb,
 					csrf_token: csrf,
 					mid: mid
 		}).then(function(response){
-			console.log(response);
 			if (response.r.status === "success"){
-				console.log(response);
 				$(e.target).removeClass('btn-success');
 				$(e.target).addClass('btn-danger');
 				$(e.target).attr("data-verb", "leave");
