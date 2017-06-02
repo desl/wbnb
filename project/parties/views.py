@@ -24,7 +24,7 @@ def index():
             party = Party(
                     form.description.data,
                     current_user.id,
-                    form.cost.data,
+                    ''.join([c for c in form.cost.data if c in '1234567890.']),
                     form.date.data,
                     form.time.data)
             if form.instructions.data:
