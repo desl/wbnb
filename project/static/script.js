@@ -101,7 +101,12 @@ $(document).ready(function(){
 				$aHost.prepend($hostImage);
 				$tdHost.append($aHost);
 
-				let $tdDistance = $('<td>').text((plist[i].distance || "") + " km");
+				let $tdDistance;
+				if (userId > 0){	
+					$tdDistance = $('<td>').text((plist[i].distance || "") + " km");
+				} else{
+					$tdDistance = $('<td>');
+				}
 
 				let $tdDescription = $('<td>').text(plist[i].description);
 

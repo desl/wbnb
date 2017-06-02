@@ -136,7 +136,10 @@ def json():
         if joinform.verb.data == 'edit':
             return redirect(url_for('parties.edit',party_id=joinform.mid.data))
         if joinform.verb.data == 'anywhere':
-            parties = json_friendly(Party.query.all())
+            if current_user.is_anonymous:
+                parties = json_friendly(Party.query.all())
+            else:
+                parties = json_friendly(Party.distance(current_user.latitude, current_user.longitude,within=100))
         if joinform.verb.data == 'nearby':
             # should make sure user is signed in
             if (current_user.is_anonymous):
