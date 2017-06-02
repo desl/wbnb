@@ -31,9 +31,6 @@ $(document).ready(function(){
 				$(e.target).attr("data-verb", "leave");
 				$(e.target).text("Leave");
 			}
-			// DO WORK!!
-
-
 		});
 	});
 
@@ -57,7 +54,6 @@ $(document).ready(function(){
 			plist = plist.sort(function(a,b){return parseFloat(a.distance) > parseFloat(b.distance)})
 
 			for (let i = 0; i < plist.length; i++){
-				// create a tr
 				let $tr = $('<tr>')
 
 				let $tdButton = $('<td>')
@@ -77,20 +73,16 @@ $(document).ready(function(){
 				}
 
 				if ( parseInt(plist[i].host_id) === parseInt(userId)){
-					// let $button = $('<button>').text('Edit').addClass('btn').addClass('btn-primary');
-					// $button.attr("data-mid", plist[i].id)
-					// $button.attr("data-verb", "edit")
-					// $tdButton.append($button);
 					let $aLink = $('<a>').text('Edit').addClass('btn').addClass('btn-primary');
 					$aLink.attr('href',"/parties/" + plist[i].id + "/edit")
 					$tdButton.append($aLink)
 				}
 
 				let $tdHost = $('<td>');
-				let $hostImage = $('<img>').addClass("list-image");
-				$hostImage.attr("src", plist[i].image);
-				$tdHost.text(" "+ plist[i].name);
-				$tdHost.prepend($hostImage);
+				let $aHost = $('<a>').text(" "+ plist[i].name).attr('href', "/users/" + plist[i].host_id);
+				let $hostImage = $('<img>').addClass("list-image").attr("src", plist[i].image);
+				$aHost.prepend($hostImage);
+				$tdHost.append($aHost);
 
 				let $tdDistance = $('<td>').text((plist[i].distance || "") + " km");
 
@@ -103,7 +95,7 @@ $(document).ready(function(){
 				let $tdDate = $('<td>').text(plist[i].date);
 
 				let $tdTime = $('<td>').text(plist[i].time);
-				// create td's for each property and append them
+
 				$tr.append($tdButton)
 					.append($tdHost)
 					.append($tdDistance)
@@ -112,7 +104,6 @@ $(document).ready(function(){
 					.append($tdLocation)
 					.append($tdDate)
 					.append($tdTime);
-				// append tr to tbody.
 				$tbody.append($tr)
 			}
 			
