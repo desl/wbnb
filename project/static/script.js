@@ -41,7 +41,6 @@ $(document).ready(function(){
 		csrf = $('#token').data("csrf"); // CSRF Token
 		url = `/parties/json`;
 		verb = $(e.target).data("verb");
-		console.log("verb is",verb);
 
 		// "X-CSRFToken" =  is what would go in the header.
 		$.post(url, {
@@ -54,7 +53,6 @@ $(document).ready(function(){
 			$tbody.empty();
 
 			let plist = response.results; // Party List
-			console.log("verb",verb);
 
 			plist = plist.sort(function(a,b){return parseFloat(a.distance) > parseFloat(b.distance)})
 
@@ -83,7 +81,7 @@ $(document).ready(function(){
 					// $button.attr("data-mid", plist[i].id)
 					// $button.attr("data-verb", "edit")
 					// $tdButton.append($button);
-					let $aLink = $('<a>').text('Edit)').addClass('btn').addClass('btn-primary');
+					let $aLink = $('<a>').text('Edit').addClass('btn').addClass('btn-primary');
 					$aLink.attr('href',"/parties/" + plist[i].id + "/edit")
 					$tdButton.append($aLink)
 				}

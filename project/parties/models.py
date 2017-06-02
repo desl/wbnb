@@ -18,6 +18,7 @@ class Party(db.Model):
   # distance is used by the distance method to transport data
   #### it is never meant to be commited to the database as it
   #### is relative the the lat/lng submitted to the method.
+  
   # host_rating = db.Column(db.Integer)
   # attendee_rating = db.Column(db.Integer)
 
@@ -72,7 +73,7 @@ def json_friendly(alist):
       "cost": str(party.cost),
       "host_id": party.host_id,
       "name": party.host.name,
-      "address": "{},{},{}".format(party.host.address, party.host.city, party.host.state),
+      "address": "{}, {}, {}".format(party.host.address, party.host.city, party.host.state),
       "lat": party.host.latitude,
       "lng": party.host.longitude,
       "attendee_id": party.attendee_id,
@@ -85,10 +86,6 @@ def json_friendly(alist):
     my_list.append(my_obj)
 
   return my_list
-
-
-
-
 
 
   def distance_clean(lat,lng,within = 100, qty=10):
@@ -112,22 +109,7 @@ def json_friendly(alist):
       c = 2 * atan2(sqrt(a), sqrt(1 - a))
       distance = R * c
       party.distance_to = format(distance, '.2f')
-      # my_obj={
-      #       "id": party.id,
-      #       "description": party.description,
-      #       "instructions": party.instructions,
-      #       "cost": str(party.cost),
-      #       "host_id": party.host_id,
-      #       "name": party.host.name,
-      #       "address": "{},{},{}".format(party.host.address, party.host.city, party.host.state),
-      #       "lat": party.host.latitude,
-      #       "lng": party.host.longitude,
-      #       "attendee_id": party.attendee_id,
-      #       "date": party.date,
-      #       "time": str(party.time),
-      #       "distance": format(distance, '.2f'),
-      #       "image": party.host.image_url
-      # }
+
       my_list.append(party)
 
     # users.sort(key=lambda user: user.steamID)

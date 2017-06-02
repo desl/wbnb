@@ -31,7 +31,7 @@ def index():
                 party.instructions = form.instructions.data
             db.session.add(party)
             db.session.commit()
-            return redirect(url_for('parties.index'))
+            return redirect(url_for('root'))
         else:
             return render_template('parties/new.html',form=form)
     parties = Party.query.all()
