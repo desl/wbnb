@@ -1,5 +1,5 @@
-from flask import redirect, render_template, request, url_for, Blueprint, flash
-from project.parties.models import Party
+from flask import redirect, render_template, request, url_for, Blueprint, flash, jsonify
+from project.parties.models import Party, json_friendly
 from project.parties.forms import PartyForm, JoinForm
 from project import db, bcrypt
 from sqlalchemy.exc import IntegrityError
@@ -7,6 +7,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from functools import wraps
 from IPython import embed
 import json
+import datetime
 
 parties_blueprint = Blueprint(
   'parties',
@@ -97,6 +98,54 @@ def join(party_id):
         db.session.add(party)
         db.session.commit()
         return redirect('/')
+
+@parties_blueprint.route('/<int:party_id>/ajoin', methods=['POST'])
+@login_required
+def ajoin(party_id):
+    joinform = JoinForm(request.form)
+    if joinform.validate():
+        party = Party.query.get(party_id)
+        if joinform.verb.data == 'join':
+            party.attendee_id = current_user.id
+            db.session.add(party)
+            db.session.commit()
+            return  jsonify(r={"status": "success", "message": "Successfully Joined!"})
+        else:
+            if joinform.verb.data == 'leave' and party.attendee_id == current_user.id:
+                party.attendee_id = None
+                db.session.add(party)
+                db.session.commit()
+                return  jsonify(r={"status": "success", "message": "Successfully Left!"})
+            else:
+                flash({ 'text': "Invalid request.", 'status': 'danger'})
+        db.session.add(party)
+        db.session.commit()
+        return redirect('/')
+
+@parties_blueprint.route('/json', methods=['POST'])
+def json():
+    joinform = JoinForm(request.form)
+    if joinform.validate():
+        d = datetime.date.isoformat(datetime.date.today())
+        # parties = Party.query.filter(Party.date >= d).order_by(Party.date)
+        if joinform.verb.data == 'identify':
+            if current_user.is_anonymous:
+                return "0"
+            else:
+                return str(current_user.id)
+        if joinform.verb.data == 'edit':
+            return redirect(url_for('parties.edit',party_id=joinform.mid.data))
+        if joinform.verb.data == 'anywhere':
+            parties = json_friendly(Party.query.all())
+        if joinform.verb.data == 'nearby':
+            parties = json_friendly(Party.distance(joinform.lat.data, joinform.lng.data))
+        if joinform.verb.data == 'walking':
+            parties = json_friendly(Party.distance(joinform.lat.data, joinform.lng.data,within=1))
+        # embed()
+        # parties = Party.distance_clean("39.9126212", "-122.2864609")
+        # gork = {"foo": "bar"}
+        # embed()
+        return jsonify(results=parties)
 
 
 

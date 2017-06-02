@@ -16,3 +16,5 @@ class PartyForm(FlaskForm):
 class JoinForm(FlaskForm):
   party_id = StringField('Party ID')
   verb = StringField('verb',validators=[DataRequired()])
+  lat = StringField('lat')
+  lng = StringField('lng')

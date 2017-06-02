@@ -1,61 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script src="{{url_for('static',filename='script.js')}}"></script>
 
 <h2>Find a wearbnb near you! <small>Do your laundry with someone else at their house.</small></h2>
 <img src="http://i.huffpost.com/gen/1777054/images/o-LAUNDRY-facebook.jpg" alt="" class="img-responsive">
 Home may be where the heart is, but isn't where you have a washer and dryer.
 
 <!--0h6>Hang out with them. They're really cool!</h6-->
-
+<hr>
+<div id="ctrl-btn" class="container text-center">
+	<span id="token" data-csrf="{{tok}}" ></span>
+	<button id="default-button" data-verb="anywhere" class="btn btn-default">Do Laundry Anywhere</button>
+	<button data-verb="nearby" class="btn btn-default">Do Laundry Nearby</button>
+	<button data-verb="walking" class="btn btn-default">Walking</button>
+	<button data-verb="now" class="btn btn-default">Now</button>
+</div>
+<hr>
 <table class="table">
-<thead>
-<tr>
+	<thead>
 	<th></th>
 	<th>Host</th>
-	{% if  parties[0] and parties[0].distance != None %}
 	<th>Distance</th>
-	{% endif %}
 	<th>Description</th>
 	<th>Cost</th>
 	<th>Location</th>
 	<th>Date</th>
 	<th>Time</th>
-</tr>
-</thead>
-<tbody>
-{% for party in parties %}
-	<tr>
-		<td>{% if party.host_id == user.id %}
-				<a href="{{url_for('parties.edit',party_id=party.id)}}" class="btn btn-primary">Edit</a>
-				{% elif not party.attendee_id %}
-				<form action="{{url_for('parties.join',party_id=party.id)}}" method="POST">
-					{{ joinform.csrf_token }}
-					<input type="hidden" name="verb" value="join">
-					<input type="submit" value="Join" class="btn btn-success">
-				</form>
-				{% elif party.attendee_id == user.id %}
-				<form action="{{url_for('parties.join',party_id=party.id)}}" method="POST">
-					{{ joinform.csrf_token }}
-					<input type="hidden" name="verb" value="leave">
-					<input type="submit" value="Leave" class="btn btn-danger">
-				</form>
-				{% endif %}
-		</td>
-		<td>{{ party.host.name }} {% if party.host.image_url %}
-																	<img class="list-image" src="{{party.host.image_url}}" alt="party host">
-																	{% endif %}
-		</td>
-		{% if party.distance != None %}
-		<td>{{party.distance}} km
-		{% endif %}
-		<td>{{ party.description}}</td>
-		<td>${{ party.cost}}</td>
-		<td>{{ party.host.address}} {{ party.host.city}}, {{ party.host.state }}</td>
-		<td>{{ party.date }}</td>
-		<td>{{ party.time }}</td>
-	</tr>
-{% endfor %}
-</tbody>
+	</thead>
+	<tbody>
+		
+	</tbody>
 </table>
 {% endblock %}

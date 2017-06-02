@@ -47,19 +47,25 @@ app.register_blueprint(parties_blueprint, url_prefix='/parties')
 def load_user(id):
     return User.query.get(int(id))
 
+# @app.route('/')
+# def root():
+#   d = datetime.date.isoformat(datetime.date.today())
+#   joinform = JoinForm()
+#   if current_user.is_anonymous:
+#     parties = Party.query.filter(Party.date >= d).order_by(Party.date)
+#     u = ""
+#     # return render_template('home.html')
+#   else:
+#     u = User.query.get(current_user.id)
+#     parties = Party.query.filter(Party.date >= d).order_by(Party.date)
+#     parties = Party.distance(u.latitude, u.longitude)
+#   return render_template('home.html',user=u, parties=parties, joinform=joinform)
+
 @app.route('/')
 def root():
-  d = datetime.date.isoformat(datetime.date.today())
-  if current_user.is_anonymous:
-    pass
-    return render_template('home.html')
-  else:
-    u = User.query.get(current_user.id)
-    parties = Party.query.filter(Party.date >= d).order_by(Party.date)
-    parties = Party.distance(u.latitude, u.longitude)
-    # parties = Party.query.all()
-    joinform = JoinForm()
-  return render_template('home.html',user=u, parties=parties, joinform=joinform)
+  joinform = JoinForm()
+  tok = joinform.csrf_token.current_token
+  return render_template('home.html',tok=tok)
 
 @app.after_request
 def add_header(r):
