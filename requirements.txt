@@ -2,7 +2,7 @@ alembic==0.8.10
 appdirs==1.4.3
 appnope==0.1.0
 bcrypt==3.1.2
-certifi==2017.4.17
+certifi==2022.12.7
 cffi==1.9.1
 chardet==3.0.3
 click==6.7
